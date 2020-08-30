@@ -31,7 +31,7 @@ arg_parser.add_argument(
 args = arg_parser.parse_args()
 lang_file = str(args.lang)
 base_lang = str(args.base)
-print("\n\nUsing Files:\n--lang\t"+lang_file+"\n--base\t"+base_lang)
+print("\n\nFiles Used:\n--lang\t"+lang_file+"\n--base\t"+base_lang)
 
 # Variables
 global tree, btree, total, skipped
@@ -43,9 +43,9 @@ def isXML(given_file):
 	# (re.search(r'.*\.xml$', given_file, re.UNICODE) is not None)
 	try:
 		temp = ET.parse(given_file)
-	except:
-		del temp
-		return False
+	except FileNotFoundError:
+		print("\nError:\n\tThe file \'"+given_file+"' does not exist.\n")
+		exit()
 	else:
 		del temp
 		return True
@@ -54,14 +54,14 @@ def isXML(given_file):
 def isStrings (given_file):
 	try:
 		temp = open(given_file, 'r').read()
-	except:
-		# print('File does not exist')
-		del temp
-		return False
+	except FileNotFoundError:
+		print("\nError:\n\tThe file \'"+given_file+"' does not exist.\n")
+		exit()
 	result = (len(re.findall(r'".*"\s=\s".*";', temp)) > 0)
 	del temp
 	return result
 
+# Prints summary
 def printSummary():
 	print('\nSummary:')
 	print('\t'+str(translatedCount-1),'translated')
@@ -178,7 +178,15 @@ elif(isStrings(lang_file) & isStrings(base_lang)): # if .strings file
 	# CLEANUP MEMORY
 	re.purge()
 	del dot_strings, base_strings, isStrings
-else: # if not an xml file
-	print("\nERROR: Both files need to be of same type.")
-	print("\nPlease export a translation file from your base language as well.")
-	print('How to export --> https://t.me/TranslationsTalk/1759)') #FIXME
+# Both files not same
+elif(isXML(lang_file) or isStrings(lang_file)):
+	if(isStrings(base_lang) or isXML(base_lang)):
+		print("\nError: Both files need to be of same type.")
+		print("Please export a translation file from your base language as well.")
+		print('How to export --> https://t.me/TranslationsTalk/1759)\n') #FIXME
+# Something's not right
+else:
+	print('\n\nwow, how did you get here?!')
+	print('Please send below output to t.me/Rondevous:\n')
+	print("Files Used:\n--lang\t"+lang_file+"\n--base\t"+base_lang)
+	print("If you don't mind, please send the above files as well.")
