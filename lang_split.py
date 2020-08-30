@@ -62,16 +62,16 @@ def isStrings (given_file):
 	del temp
 	return result
 
-def printSummary ():
+def printSummary():
 	print('\nSummary:')
-	print('\t'+str(strCount-1),'strings found')
-	print('\t'+str(len(skipped)),'skipped/overlooked')
 	print('\t'+str(translatedCount-1),'translated')
 	print('\t'+str(untranslatedCount-1),'untranslated')
+	print('\t'+str(strCount-1),'strings in total')
+	print('\t'+str(len(skipped)),'skipped (did not split)')
 	print("\nFiles produced:")
 	print("\t"+translatedFileName)
 	print("\t"+untranslatedFileName)
-	print('\nImport the translated file')
+	print('\nImport the translated file\n')
 
 # Algo for XML replacer
 if(isXML(lang_file) & isXML(base_lang)):
@@ -102,12 +102,12 @@ if(isXML(lang_file) & isXML(base_lang)):
 					untranslatedCount += 1
 					root.remove(string)
 					if(args.untranslated):
-						print('\n'+str(strCount)+'. '+bstring_name+'')
+						print('\n'+str(untranslatedCount)+'. '+bstring.text+'')
 				else:
 					translatedCount += 1
 					broot.remove(bstring)
 					if(args.translated):
-						print('\n'+str(strCount)+'. '+string_name+'')
+						print('\n'+str(translatedCount)+'. '+string.text+'')
 				break
 			# broot
 		strCount += 1
@@ -161,18 +161,19 @@ elif(isStrings(lang_file) & isStrings(base_lang)): # if .strings file
 					untranslatedCount += 1
 					untranslatedStringsFile.write("\""+strName+"\" = \""+strValue+"\";\n")
 					if(args.untranslated):
-						print('\n'+str(strCount)+'. '+strName+'')
+						print('\n'+str(untranslatedCount)+'. '+strName+'')
 				else:
 					translatedCount += 1
 					translatedStringsFile.write("\""+strName+"\" = \""+bStrValue+"\";\n")
 					if(args.translated):
-						print('\n'+str(strCount)+'. '+bStrName+'')
+						print('\n'+str(translatedCount)+'. '+bStrName+'')
 				break # found match
 			# base_strings
 		strCount += 1
 		# dot_strings
 	translatedStringsFile.close()
 	untranslatedStringsFile.close()
+	#
 	printSummary()
 	# CLEANUP MEMORY
 	re.purge()
