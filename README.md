@@ -4,11 +4,10 @@ Split your Telegram language file into **translated** and **untranslated**. Impo
 All apps on the [Telegram translations platform]((https://translations.telegram.org)) are supported.
 
 ## Why do I need this?
-Did you make changes to an exported translation file, but don't want to import 2000 untranslated strings?
+- Is your recent translations messed up?
+- Did you make changes to an exported translation file, but don't want to import 2000 untranslated strings?
 
-Is your recent translations page messed up?
-
-[lang_split.py](https://github.com/rondevous/lang_split/raw/master/lang_split.py) can help you keep a clean recent-translations!
+[lang_split.py](https://github.com/rondevous/lang_split/raw/master/lang_split.py) will give you a clean history of your recent-translations!
 
 ### Setup:
 1. Download and Install [Python 3](https://www.python.org/downloads)
@@ -17,14 +16,14 @@ _(right click the link > Save link as)_
 
 ### Preparations:
 1. Export your language from [translations.telegram.org/**langname/appname**](https://translations.telegram.org)
-2. Also export the base language of it.
+2. Also export its base language.
 * If your base language is English, export [English](https://translations.telegram.org/en), if its Russian, export [Russian](https://translations.telegram.org/ru).
 * If your language is official, your base language is English by default.
 3. Keep all 3 files in the same folder:
 ```
 lang_split.py
 language_file.xml
-base_langauge_file.xml
+base_language_file.xml
 ```
 
 ## How to use:
